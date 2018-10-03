@@ -23,7 +23,7 @@ public class Produtos {
         setPreco(p);
         setCodigo(c);
         setQuantidade(q);
-        setLocalDate(v);
+        setValidade(v);
         
     }
 
