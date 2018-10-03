@@ -1,11 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.produto.cadastro.ProdutoCadastroController">
-    
-</AnchorPane>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefWidth="770.0" spacing="20.0">
+               <children>
+                  <JFXTextField editable="false" labelFloat="true" prefHeight="25.0" prefWidth="115.0" promptText="ID" />
+                  <JFXTextField labelFloat="true" layoutX="10.0" layoutY="10.0" prefHeight="11.0" prefWidth="632.0" promptText="Código" HBox.hgrow="ALWAYS" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </HBox>
+            <JFXTextField labelFloat="true" prefWidth="770.0" promptText="Nome">
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </JFXTextField>
+            <HBox layoutX="10.0" layoutY="10.0" prefWidth="770.0" spacing="20.0">
+               <children>
+                  <JFXTextField editable="false" labelFloat="true" prefHeight="25.0" prefWidth="106.0" promptText="Preço" />
+                  <JFXTextField labelFloat="true" layoutX="10.0" layoutY="10.0" promptText="Quantidade" HBox.hgrow="ALWAYS" />
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefWidth="770.0" spacing="20.0">
+               <children>
+                  <Label text="Validade" />
+                  <JFXDatePicker />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <JFXButton text="Salvar" />
+                  <JFXButton text="Editar" />
+                  <JFXButton text="Excluir" />
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </HBox>
+            <Separator prefWidth="200.0">
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </Separator>
+            <HBox prefWidth="200.0" spacing="20.0">
+               <children>
+                  <JFXTextField prefHeight="25.0" prefWidth="209.0" promptText="Pesquisar" />
+                  <JFXComboBox prefHeight="25.0" prefWidth="109.0" />
+                  <JFXButton prefHeight="25.0" prefWidth="60.0" text="Filtrar" />
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>
