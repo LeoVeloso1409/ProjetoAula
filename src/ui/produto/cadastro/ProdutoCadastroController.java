@@ -5,6 +5,7 @@
  */
 package ui.produto.cadastro;
 
+import Exception.ProdutoExistenteException;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
@@ -14,6 +15,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import model.entidades.Produtos;
 import model.produto.ProdutoBO;
@@ -74,11 +76,42 @@ public class ProdutoCadastroController implements Initializable {
         //Manda a classe de nogocio salvar o produto
         try{
             pBO.salvar(p);
+            
+            limparCampos();
+            
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setTitle("SUCESSO");
+            a.setHeaderText(null);
+            a.setContentText("Produto Salvo com Sucesso!");
+            a.showAndWait();
+            
         }
         catch(SQLException e){
             //TODO Colocar uma mensagen de erro
             e.printStackTrace();
+            
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("ERRO");
+            a.setHeaderText(null);
+            a.setContentText("Erro de Comunicação com o Banco de Dados.");
+            a.showAndWait();
         }
+        catch(ProdutoExistenteException e){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("ERRO");
+            a.setHeaderText(null);
+            a.setContentText(e.getMessage());
+            a.showAndWait();
+        }
+    }
+    
+    private void limparCampos(){
+        nome.setText(null);
+        preco.setText(null);
+        codigo.clear();
+        qtd.setText(null);
+        validade.setValue(null);
+        
     }
 
     @FXML
