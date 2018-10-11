@@ -35,7 +35,7 @@
             </JFXTextField>
             <HBox layoutX="10.0" layoutY="10.0" prefWidth="770.0" spacing="20.0">
                <children>
-                  <JFXTextField fx:id="preco" editable="false" labelFloat="true" prefHeight="25.0" prefWidth="106.0" promptText="Preço" />
+                  <JFXTextField fx:id="preco" labelFloat="true" prefHeight="25.0" prefWidth="106.0" promptText="Preço" />
                   <JFXTextField fx:id="qtd" labelFloat="true" layoutX="10.0" layoutY="10.0" promptText="Quantidade" HBox.hgrow="ALWAYS" />
                </children>
                <padding>

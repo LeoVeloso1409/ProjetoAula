@@ -58,12 +58,13 @@ public class ConnectionFactory {
      * TODO fazer o teste de conexao em outro lugar
      * @param args 
      */
+    /*
     public static void main(String[] args) {
         try {
             pegarConexao();
         } catch (SQLException ex) {
             Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
        
 }

@@ -9,12 +9,14 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import model.entidades.Produtos;
+import model.produto.ProdutoBO;
 
 /**
  * FXML Controller class
@@ -41,13 +43,16 @@ public class ProdutoCadastroController implements Initializable {
     private JFXComboBox<String> cboxFiltro;
     @FXML
     private TableView<Produtos> tabela;
+    
+    private ProdutoBO pBO;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        pBO = new ProdutoBO();
     }    
 
     @FXML
@@ -65,6 +70,15 @@ public class ProdutoCadastroController implements Initializable {
                 qtdDouble,
                 validade.getValue()
             );
+        
+        //Manda a classe de nogocio salvar o produto
+        try{
+            pBO.salvar(p);
+        }
+        catch(SQLException e){
+            //TODO Colocar uma mensagen de erro
+            e.printStackTrace();
+        }
     }
 
     @FXML

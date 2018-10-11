@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -33,6 +34,7 @@ public class PrincipalController implements Initializable {
         // TODO
     }    
     
+    @FXML
     private void abrirJanelaCadastro(ActionEvent event) throws IOException{
         
         // Abrir a janela de Cadastro de Produtos
@@ -51,7 +53,7 @@ public class PrincipalController implements Initializable {
         stage.setTitle("Cadastro de Produto");
         
         //Icone
-        stage.getIcons().add(new Image("/imagens/icone.png"));
+        stage.getIcons().add(new Image("/Imagens/icone.png"));
         
         //Adicionando a scene no stage
         stage.setScene(scene);
