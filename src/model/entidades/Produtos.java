@@ -1,6 +1,8 @@
 
 package model.entidades;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 
 /**
@@ -26,7 +28,16 @@ public class Produtos {
         setValidade(v);
         
     }
-
+    
+     public Produtos(int id, String n, String p, String c, String q, LocalDate v) throws ParseException{
+        setId(id);
+        setNome(n);
+        setPreco(p);
+        setCodigo(c);
+        setQuantidade(q);
+        setValidade(v);
+     }
+     
     public int getId() {
         return id;
     }
@@ -50,6 +61,11 @@ public class Produtos {
     public void setPreco(double preco) {
         this.preco = preco;
     }
+    
+    public void setPreco(String preco) throws ParseException{
+        NumberFormat nf = NumberFormat.getInstance();
+        this.preco = nf.parse(preco).doubleValue();
+    }
 
     public String getCodigo() {
         return codigo;
@@ -65,6 +81,11 @@ public class Produtos {
 
     public void setQuantidade(double quantidade) {
         this.quantidade = quantidade;
+    }
+    
+    public void setQuantidade(String quantidade) throws ParseException{
+         NumberFormat nf = NumberFormat.getInstance();
+        this.quantidade = nf.parse(quantidade).doubleValue();
     }
 
     public LocalDate getValidade() {

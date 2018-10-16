@@ -2,6 +2,7 @@
 package ui.main;
 
 import java.io.IOException;
+import java.util.Locale;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +13,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
     public void start(Stage stage) throws IOException{
+        
+        Locale.setDefault(new Locale("pt","BR"));
         
         Parent principal = FXMLLoader.load(getClass().getResource("Principal.fxml"));
         
