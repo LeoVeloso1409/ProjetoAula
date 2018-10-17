@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -186,9 +188,58 @@ public class ProdutoCadastroController implements Initializable {
     @FXML
     private void btnEditar(ActionEvent event) {
     }
+    
+    /**
+     * Exclui um produto no banco de dados
+     * @param event 
+     */
 
     @FXML
     private void btnExcluir(ActionEvent event) {
-    }
-    
+        
+        // Pegar o produto selecionado (pode ser null)
+        Produtos p = tabela.getSelectionModel().getSelectedItem();
+        
+        // Verifica se tem produto selecionado na tabela.
+        if(p != null){
+            Alert conf = new Alert(Alert.AlertType.CONFIRMATION);
+            conf.setTitle("Excluir");
+            conf.setHeaderText("");
+            conf.setContentText("Deseja realmente excluir este Item?");
+            
+           //Pegando o botao que foi pressionado
+            Optional<ButtonType> btn = conf.showAndWait();
+
+            //Verificar qual botão foi pressionado
+            if (btn.get() == ButtonType.OK) { //vai excluir
+
+                try {
+                    
+                    //Manda a classe de negocio excluir
+                    pBO.excluir(p);
+                    
+                    //Atualizar a tabela
+                    carregarDados();
+                    
+                    //Mensagem de excluído com sucesso
+                    Alert m = new Alert(Alert.AlertType.INFORMATION);
+                    m.setTitle("Sucesso");
+                    m.setHeaderText(null);
+                    m.setContentText("Produto excluído com sucesso");
+                    m.showAndWait();
+                    
+                } catch (SQLException ex) {
+                    //Mensagem de erro
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setTitle("ERRO");
+                    a.setHeaderText(null);
+                    a.setContentText("Erro de comunicação com "
+                    + "o Banco de Dado procure o administrador "
+                    + "do sistema");
+                    a.showAndWait();
+                }
+            }
+        }
+    } 
+  
 }

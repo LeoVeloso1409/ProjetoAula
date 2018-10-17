@@ -43,4 +43,9 @@ public class ProdutoBO {
         return dao.listar();
         
     }
+    
+    public void excluir(Produtos p) throws SQLException{
+        //Mandar o dao excluir
+        dao.excluir(p);
+    }
 }

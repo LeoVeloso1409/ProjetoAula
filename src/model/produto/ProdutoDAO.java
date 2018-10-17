@@ -110,7 +110,22 @@ public class ProdutoDAO {
             
         }//while
         
-        return lista;
+        return lista; 
+    }
+    
+    public void excluir(Produtos p) throws SQLException{
+        //Comando SQL
+        String sql = "DELETE FROM Produto WHERE id = ?";
+        //Preparar o SQL
+        PreparedStatement ps = ConnectionFactory.prepararSQL(sql);
         
+        //Substituir os valores
+        ps.setInt(1, p.getId());
+       
+        //Executar o comando no banco de dados
+        ps.executeUpdate();
+        
+        //fechar a conexao
+        ps.close();
     }
 }
