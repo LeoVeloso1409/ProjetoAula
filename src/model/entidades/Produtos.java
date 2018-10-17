@@ -1,9 +1,11 @@
 
 package model.entidades;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -57,6 +59,16 @@ public class Produtos {
     public double getPreco() {
         return preco;
     }
+    
+    /**
+     * Formata o valor/Preço para o padrão Brasileiro.
+     * @return 
+     */
+    
+    public String getPrecoFormatado(){
+        DecimalFormat formatador = new DecimalFormat("#0.00");
+        return formatador.format(preco);
+    }
 
     public void setPreco(double preco) {
         this.preco = preco;
@@ -78,6 +90,15 @@ public class Produtos {
     public double getQuantidade() {
         return quantidade;
     }
+    
+    /**
+     * Formata o valor da quantidade para o padrão brasileiro.
+     * @return 
+     */
+    public String getQuantidadeFormatada(){
+        DecimalFormat formatador = new DecimalFormat("#0.00");
+        return formatador.format(quantidade);
+    }
 
     public void setQuantidade(double quantidade) {
         this.quantidade = quantidade;
@@ -91,10 +112,18 @@ public class Produtos {
     public LocalDate getValidade() {
         return validade;
     }
+    
+    /**
+     * Formatar a data validade de LocalDate para String no formato brasileiro
+     * @return 
+     */
+    public String getValidadeFormatada(){
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return validade.format(formatador);
+    }
 
     public void setValidade(LocalDate validade) {
         this.validade = validade;
     }
-    
     
 }

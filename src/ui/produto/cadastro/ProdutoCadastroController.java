@@ -80,23 +80,21 @@ public class ProdutoCadastroController implements Initializable {
         //Configurando as colunas da tabela
         TableColumn<Produtos, String> colNome = new TableColumn("Nome");
         TableColumn<Produtos, String> colCodigo = new TableColumn("Código");
-        TableColumn<Produtos, Double> colPreco = new TableColumn("Preço");
+        TableColumn<Produtos, Double> colPreco = new TableColumn("Preço R$");
         TableColumn<Produtos, Double> colQtde = new TableColumn("Quantidade");
         TableColumn<Produtos, String> colValidade = new TableColumn("Validade");
 
         //Configurar como os valores serão lidos (nome dos atributos)
         colNome.setCellValueFactory(new PropertyValueFactory<Produtos, String>("nome"));
         colCodigo.setCellValueFactory(new PropertyValueFactory<Produtos, String>("codigo"));
-        colPreco.setCellValueFactory(new PropertyValueFactory<Produtos, Double>("preco"));
-        colQtde.setCellValueFactory(new PropertyValueFactory<Produtos, Double>("quantidade"));
-        colValidade.setCellValueFactory(new PropertyValueFactory<Produtos, String>("validade"));
+        colPreco.setCellValueFactory(new PropertyValueFactory<Produtos, Double>("precoFormatado"));
+        colQtde.setCellValueFactory(new PropertyValueFactory<Produtos, Double>("quantidadeFormatada"));
+        colValidade.setCellValueFactory(new PropertyValueFactory<Produtos, String>("validadeFormatada"));
         
         //Adiciona as colunas na tabela na ordem que devem aparecer
         tabela.getColumns().addAll(colCodigo, colNome, colPreco, 
                 colQtde, colValidade);
-        
     }
-    
     
     /**
      * Vai carregar os dados na tabela
