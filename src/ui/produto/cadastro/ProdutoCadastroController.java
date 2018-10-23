@@ -124,31 +124,84 @@ public class ProdutoCadastroController implements Initializable {
        
         // Pegar dados da tela Produtos
        
-        //Manda a classe de nogocio salvar o produto
+        
         try{
-             Produtos p = new Produtos(
-                0,
-                nome.getText(),
-                preco.getText(),
-                codigo.getText(),  
-                qtd.getText(),
-                validade.getValue()
-            );
-                    
-            pBO.salvar(p);
-            
-            // Atualizando os dados da tabela
-            carregarDados();
-            
-            //Limpando os dados apos salvar
-            limparCampos();
-            
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setTitle("SUCESSO");
-            a.setHeaderText(null);
-            a.setContentText("Produto Salvo com Sucesso!");
-            a.showAndWait();
-            
+            //Manda a classe de nogocio salvar o produto
+            if (id.getText().isEmpty()) {//no caso de inserir
+
+                //Pegando os dados da tela e criando um produto
+                Produtos p = new Produtos(
+                        "0",
+                        nome.getText(),
+                        preco.getText(),
+                        codigo.getText(),
+                        qtd.getText(),
+                        validade.getValue()
+                );
+
+                //Mandando a classe de negocio salvar o produto
+                pBO.salvar(p);
+
+                //Atualizando os dados da tabela
+                carregarDados();
+                //dados.add(p); (outra opção que adiciona no fim da tabela)
+
+                //Limpando os campos apos salvar
+                limparCampos();
+
+                //Mensagem de Sucesso
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle("Sucesso");
+                a.setHeaderText(null);
+                a.setContentText("Produto salvo com sucesso!");
+                a.showAndWait();
+
+            } else {//no caso de editar
+
+                //Configurando a caixa de confirmacao
+                Alert conf = new Alert(Alert.AlertType.CONFIRMATION);
+                conf.setTitle("Editar");
+                conf.setHeaderText("");
+                conf.setContentText("Deseja Realmente salvar as alterações?");
+
+                //Pegando o botao que foi pressionado
+                Optional<ButtonType> btn = conf.showAndWait();
+
+                if (btn.get() == ButtonType.OK) {//quer mesmo salvar
+                    //Pegando os dados da tela e criando um produto
+                    Produtos p = new Produtos(
+                            id.getText(),
+                            nome.getText(),
+                            preco.getText(),
+                            codigo.getText(),
+                            qtd.getText(),
+                            validade.getValue()
+                    );
+
+                    pBO.editar(p);
+
+                    //Atualizando os dados da tabela
+                    carregarDados();
+                    //dados.add(p); (outra opção que adiciona no fim da tabela)
+
+                    //Limpando os campos apos salvar
+                    limparCampos();
+
+                    //Mensagem de Sucesso
+                    Alert a = new Alert(Alert.AlertType.INFORMATION);
+                    a.setTitle("Sucesso");
+                    a.setHeaderText(null);
+                    a.setContentText("Produto salvo com sucesso!");
+                    a.showAndWait();
+
+                } else {
+
+                    //Limpando os campos apos salvar
+                    limparCampos();
+
+                }
+
+            }
         }
         catch(SQLException e){
             //TODO Colocar uma mensagen de erro
@@ -187,6 +240,27 @@ public class ProdutoCadastroController implements Initializable {
 
     @FXML
     private void btnEditar(ActionEvent event) {
+        
+        // Pegar o produto selecionado (pode ser null)
+        Produtos p = tabela.getSelectionModel().getSelectedItem();
+        
+        if(p != null){ //para item selecionado
+            // Preenche os campos com os dados do item selecionado
+            id.setText(String.valueOf(p.getId()));
+            nome.setText(p.getNome());
+            codigo.setText(p.getCodigo());
+            preco.setText(p.getPrecoFormatado());
+            qtd.setText(p.getQuantidadeFormatada());
+            validade.setValue(p.getValidade()); 
+        }
+        else{//Não tem produto selecionado
+            
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("ERRO");
+            a.setHeaderText(null);
+            a.setContentText("Selecione um produto ");
+            a.showAndWait();
+        }
     }
     
     /**
@@ -241,5 +315,11 @@ public class ProdutoCadastroController implements Initializable {
             }
         }
     } 
-  
+    private void carregarComboBusca(){
+        // Criar a lista
+        ObservableList<String> lista = FXCollections.observableArrayList("Código", "Nome");
+        
+        //Jogar a lista no combo
+        cboxFiltro.getItems().addAll(lista);
+    }
 }

@@ -31,7 +31,7 @@ public class Produtos {
         
     }
     
-     public Produtos(int id, String n, String p, String c, String q, LocalDate v) throws ParseException{
+     public Produtos(String id, String n, String p, String c, String q, LocalDate v) throws ParseException{
         setId(id);
         setNome(n);
         setPreco(p);
@@ -46,6 +46,10 @@ public class Produtos {
 
     public void setId(int id) {
         this.id = id;
+    }
+    
+     public void setId(String id){
+        this.id = Integer.parseInt(id);
     }
 
     public String getNome() {
