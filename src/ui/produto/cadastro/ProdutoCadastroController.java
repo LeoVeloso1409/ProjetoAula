@@ -68,6 +68,8 @@ public class ProdutoCadastroController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         pBO = new ProdutoBO();
         
+        carregarComboBusca();
+        
         configurarTabela();
         
         carregarDados();
@@ -210,7 +212,9 @@ public class ProdutoCadastroController implements Initializable {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setTitle("ERRO");
             a.setHeaderText(null);
-            a.setContentText("Erro de Comunicação com o Banco de Dados.");
+            a.setContentText("Erro de comunicação com "
+                    + "o Banco de Dado procure o administrador "
+                    + "do sistema");
             a.showAndWait();
         }
         catch(ProdutoExistenteException e){
@@ -224,7 +228,7 @@ public class ProdutoCadastroController implements Initializable {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setTitle("ERRO");
             a.setHeaderText(null);
-            a.setContentText("Erro na Conversão dos Valores e Quantidade");
+            a.setContentText("Erro na Conversão dos Campos Preço e Quantidade");
             a.showAndWait();
         }
     }
@@ -295,6 +299,8 @@ public class ProdutoCadastroController implements Initializable {
                     //Atualizar a tabela
                     carregarDados();
                     
+                    limparCampos();
+                    
                     //Mensagem de excluído com sucesso
                     Alert m = new Alert(Alert.AlertType.INFORMATION);
                     m.setTitle("Sucesso");
@@ -321,5 +327,67 @@ public class ProdutoCadastroController implements Initializable {
         
         //Jogar a lista no combo
         cboxFiltro.getItems().addAll(lista);
+    }
+
+    @FXML
+    private void btnFiltrar(ActionEvent event) {
+
+        //Pegar o que esta selecionado no comboBox
+        String campo = cboxFiltro.getValue();
+
+        if (campo != null) {//a pessoa selecionou um campo
+
+            //pegar o que estiver escrito no campo de pesquisa
+            String pesquisa = pesquisar.getText();
+
+            if (campo.equals("Código")) {
+
+                try {
+                    
+                    //Convertendo o ArrayList no ObservableList com os dados do Banco
+                    dados = FXCollections.observableArrayList(pBO.filtrarPeloCodigo(pesquisa));
+                    //Joga os dados na tabela para exibir
+                    tabela.setItems(dados);
+                    
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    //Mensagem de erro
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setTitle("ERRO");
+                    a.setHeaderText(null);
+                    a.setContentText("Erro de comunicação com "
+                            + "o Banco de Dado procure o administrador "
+                            + "do sistema");
+                    a.showAndWait();
+                    
+                }
+
+            } else {//No caso de ser nome
+
+                //Buscar pelo Nome
+                try {
+                    
+                    //Convertendo o ArrayList no ObservableList com os dados do Banco
+                    dados = FXCollections.observableArrayList(pBO.filtrarPeloNome(pesquisa));
+                    //Joga os dados na tabela para exibir
+                    tabela.setItems(dados);
+                    
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    //Mensagem de erro
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setTitle("ERRO");
+                    a.setHeaderText(null);
+                    a.setContentText("Erro de comunicação com "
+                            + "o Banco de Dado procure o administrador "
+                            + "do sistema");
+                    a.showAndWait();   
+                }
+            }
+
+        } else {
+            //TODO mensagem de erro de campo
+        }
+
     }
 }

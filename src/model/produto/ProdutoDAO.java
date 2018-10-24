@@ -115,7 +115,7 @@ public class ProdutoDAO {
     
     public void excluir(Produtos p) throws SQLException{
         //Comando SQL
-        String sql = "DELETE FROM Produto WHERE id = ?";
+        String sql = "DELETE FROM Produto WHERE idProduto = ?";
         //Preparar o SQL
         PreparedStatement ps = ConnectionFactory.prepararSQL(sql);
         
@@ -132,9 +132,7 @@ public class ProdutoDAO {
      public void editar(Produtos p) throws SQLException{
         
         //Comando SQL
-        String sql = "UPDATE produto SET nome=?, "
-                + "codigo=?, preco=?, quantidade=?, validade=? "
-                + "WHERE id=?";
+        String sql = "UPDATE Produto SET nomeProduto=?, codProduto=?, precoProdutoo=?, quantidade=?, validade=? WHERE idProduto=?";
         
         //Preparar o SQL
         PreparedStatement ps = ConnectionFactory.prepararSQL(sql);
@@ -153,5 +151,65 @@ public class ProdutoDAO {
         //fechar a conexao
         ps.close();
          
+    }
+     /**
+     * Buscar um produto pelo código
+     * @param p Código e Nome
+     * @return 
+     * @throws SQLException 
+     */
+     
+     public ArrayList<Produtos> filtrarPeloCodigo(String pesquisa) throws SQLException{
+        
+        //Comando
+        String sql = "SELECT * FROM produto WHERE codProduto LIKE ?";
+        
+        return filtrar(pesquisa, sql);
+        
+    }
+    
+    public ArrayList<Produtos> filtrarPeloNome(String pesquisa) throws SQLException{
+        
+        //Comando
+        String sql = "SELECT * FROM produto WHERE nomeProduto LIKE ?";
+        
+        return filtrar(pesquisa, sql);
+        
+    }
+     
+    public ArrayList<Produtos> filtrar(String pesquisa, String sql) throws SQLException {
+    
+        //Preparar o SQL
+        PreparedStatement ps = ConnectionFactory.prepararSQL(sql);
+        
+        //Substituir os parametros
+        ps.setString(1, "%" + pesquisa + "%");
+        
+        //Executa consulta no bd
+        ResultSet resultado = ps.executeQuery();
+        
+        //Criar a lista
+        ArrayList<Produtos> lista = new ArrayList<Produtos>();
+        
+        //Verificar se tem algum resultado
+        while(resultado.next()){
+            //Cria o objeto com o resultado do BD
+            
+            Produtos p = new Produtos(
+                    resultado.getInt("idProduto"),
+                    resultado.getString("nomeProduto"),
+                    resultado.getDouble("precoProdutoo"),
+                    resultado.getString("codProduto"),
+                    resultado.getDouble("quantidade"),
+                    LocalDate.parse(resultado.getDate("validade").toString())
+            );
+            
+            //Adiciono o produto na lista
+            lista.add(p);
+            
+        }
+        
+        return lista;
+        
     }
 }
